@@ -76,12 +76,13 @@ class FileModel
     @last_modified ||= File.stat(@filename).mtime
   end
   
-  def description
-    metadata("description")
-  end
-  
-  def keywords
-    metadata("keywords")
+  # Convenient accessors for meta information
+  # Conveniently bundeled in a meta programming block
+  [:description, :keywords, :robots,
+    :author, :author_email, :author_uri].each do |meta_info|
+    define_method(meta_info) do
+      metadata(meta_info.to_s)
+    end
   end
 
   private

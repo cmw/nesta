@@ -14,6 +14,11 @@ xml.feed :xmlns => "http://www.w3.org/2005/Atom" do
   @articles.each do |article|
     xml.entry do
       xml.title article.heading
+      xml.author do
+        xml.name article.author if article.author
+        xml.uri article.author_uri if article.author_uri
+        xml.email article.author_email if article.author_email
+      end if article.author
       xml.link :href => url_for(article),
                :type => "text/html",
                :rel => "alternate"
